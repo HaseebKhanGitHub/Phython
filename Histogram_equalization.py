@@ -1,51 +1,54 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Oct  2 07:26:23 2023
+Created on Tue Oct 10 21:00:04 2023
 
 @author: khanb
 """
 
-import cv2
 import numpy as np
-
-# Load the image (you need to have OpenCV installed)
-image = cv2.imread('your_image_path.jpg', cv2.IMREAD_GRAYSCALE)
-
-# Function to perform histogram equalization
+import cv2
+    
 def histogram_equalization(image):
-    # Calculate the histogram
-    histogram = np.zeros(256, dtype=int)
+    # Calculate the histogram of the input image
     height, width = image.shape
+    histogram = np.zeros(256, dtype=int)
+    
     for i in range(height):
         for j in range(width):
             pixel_value = image[i, j]
             histogram[pixel_value] += 1
+            
+    # Calculate the cumulative distribution function (CDF)
+    cdf = np.zeros(256, dtype=float)
+    cdf[0] = histogram[0]
     
-    # Calculate the cumulative histogram
-    cumulative_histogram = np.cumsum(histogram)
+    for i in range(1, 256):
+        cdf[i] = cdf[i - 1] + histogram[i]
     
-    # Calculate the transformation function
-    transformation_function = (cumulative_histogram - cumulative_histogram.min()) * 255 / (cumulative_histogram.max() - cumulative_histogram.min())
     
-    # Apply the transformation to the image
+
+    # Perform histogram equalization
     equalized_image = np.zeros_like(image)
+    num_pixels = height * width
+    
     for i in range(height):
         for j in range(width):
-            equalized_image[i, j] = int(transformation_function[image[i, j]])
+            pixel_value = image[i, j]
+            equalized_value = int(255 * cdf[pixel_value] / num_pixels)
+            equalized_image[i, j] = equalized_value
     
     return equalized_image
+    
+# Load an image
+input_image = cv2.imread('Input.PNG', cv2.IMREAD_GRAYSCALE)
 
 # Perform histogram equalization
-equalized_image = histogram_equalization(image)
+equalized_image = histogram_equalization(input_image)
 
-# Save the equalized image
-cv2.imwrite('equalized_image.jpg', equalized_image)
+# Display the original and equalized images
+cv2.imshow('Original Image', input_image)
+cv2.imshow('Equalized Image', equalized_image)
 
-# Display the original and equalized images (you need to have matplotlib installed)
-import matplotlib.pyplot as plt
-
-plt.subplot(121), plt.imshow(image, cmap='gray')
-plt.title('Original Image'), plt.xticks([]), plt.yticks([])
-plt.subplot(122), plt.imshow(equalized_image, cmap='gray')
-plt.title('Equalized Image'), plt.xticks([]), plt.yticks([])
-plt.show()
+# Wait for a key press and then close the windows
+cv2.waitKey(0)
+cv2.destroyAllWindows()
