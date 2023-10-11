@@ -49,6 +49,3 @@ equalized_image = histogram_equalization(input_image)
 cv2.imshow('Original Image', input_image)
 cv2.imshow('Equalized Image', equalized_image)
 
-# Wait for a key press and then close the windows
-cv2.waitKey(0)
-cv2.destroyAllWindows()
