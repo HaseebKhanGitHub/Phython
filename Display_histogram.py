@@ -4,7 +4,6 @@ Created on Tue Oct 10 21:32:33 2023
 
 @author: khanb
 """
-
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -36,34 +35,39 @@ def histogram_equalization(image):
             equalized_value = int(255 * cdf[pixel_value] / num_pixels)
             equalized_image[i, j] = equalized_value
     
-    return equalized_image
+    return equalized_image, histogram, cdf
 
 # Load an image
-input_image = cv2.imread('Input.PNG', cv2.IMREAD_GRAYSCALE)
+input_image = cv2.imread('Input1.PNG', cv2.IMREAD_GRAYSCALE)
 
-# Perform histogram equalization
-equalized_image = histogram_equalization(input_image)
+# Perform histogram equalization and calculate the original histogram
+equalized_image, original_histogram, _ = histogram_equalization(input_image)
 
 # Calculate the histogram of the equalized image
-hist = cv2.calcHist([equalized_image], [0], None, [256], [0, 256])
+equalized_histogram, _ = np.histogram(equalized_image, bins=256, range=(0, 256))
 
-# Plot the histogram using Matplotlib
-plt.figure()
-plt.subplot(121), plt.imshow(input_image, cmap='gray')
-plt.title('Original Image'), plt.xticks([]), plt.yticks([])
-plt.subplot(122), plt.imshow(equalized_image, cmap='gray')
-plt.title('Equalized Image'), plt.xticks([]), plt.yticks([])
-plt.figure()
-plt.title("Histogram")
+# Plot the histograms using Matplotlib
+plt.figure(figsize=(12, 5))
+
+# Original Histogram
+plt.subplot(1, 2, 1)
+plt.title("Original Histogram")
 plt.xlabel("Pixel Value")
 plt.ylabel("Frequency")
-plt.plot(hist)
+plt.plot(original_histogram, color='b')
 plt.xlim([0, 256])
+
+# Equalized Histogram
+plt.subplot(1, 2, 2)
+plt.title("Equalized Histogram")
+plt.xlabel("Pixel Value")
+plt.ylabel("Frequency")
+plt.plot(equalized_histogram, color='r')
+plt.xlim([0, 256])
+
+plt.tight_layout()
 plt.show()
 
-# Display the original and equalized images
-cv2.imshow('Original Image', input_image)
-cv2.imshow('Equalized Image', equalized_image)
 
 # Wait for a key press and then close the windows
 cv2.waitKey(0)
