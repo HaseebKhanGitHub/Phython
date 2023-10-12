@@ -40,7 +40,7 @@ def histogram_equalization(image):
     return equalized_image
     
 # Load an image
-input_image = cv2.imread('Input.PNG', cv2.IMREAD_GRAYSCALE)
+input_image = cv2.imread('Input1.PNG', cv2.IMREAD_GRAYSCALE)
 
 # Perform histogram equalization
 equalized_image = histogram_equalization(input_image)
