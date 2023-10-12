@@ -25,8 +25,6 @@ def histogram_equalization(image):
     for i in range(1, 256):
         cdf[i] = cdf[i - 1] + histogram[i]
     
-    
-
     # Perform histogram equalization
     equalized_image = np.zeros_like(image)
     num_pixels = height * width
@@ -38,9 +36,9 @@ def histogram_equalization(image):
             equalized_image[i, j] = equalized_value
     
     return equalized_image
-    
+
 # Load an image
-input_image = cv2.imread('Input1.PNG', cv2.IMREAD_GRAYSCALE)
+input_image = cv2.imread('Input.PNG', cv2.IMREAD_GRAYSCALE)
 
 # Perform histogram equalization
 equalized_image = histogram_equalization(input_image)
@@ -48,4 +46,8 @@ equalized_image = histogram_equalization(input_image)
 # Display the original and equalized images
 cv2.imshow('Original Image', input_image)
 cv2.imshow('Equalized Image', equalized_image)
+
+# Wait for a key press and then close the windows
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
