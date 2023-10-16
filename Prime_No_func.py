@@ -21,3 +21,5 @@ def is_prime(number):
         i += 6
 
     return True
+res=is_prime(13)
+print(res)
