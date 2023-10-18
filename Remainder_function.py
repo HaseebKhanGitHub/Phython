@@ -17,6 +17,6 @@ def rem(x, a):
     elif x < a:
         return x
     else:
-        rem(x-a, a)
-res=rem(2,5)
+        return rem(x-a, a)
+res=rem(7,5)
 print(res)
