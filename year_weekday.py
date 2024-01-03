@@ -10,4 +10,7 @@ import datetime
 x = datetime.datetime.now()
 
 print(x.year)
+print(x.month)
+print(x.time())
+print(x.day)
 print(x.strftime("%A"))
