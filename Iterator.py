@@ -11,3 +11,13 @@ myitr= iter(myTuple)
 print(next(myitr))
 print(next(myitr))
 print(next(myitr))
+
+myTuple2 = ("orange")
+myitr2 = iter(myTuple2)
+
+print(next(myitr2))
+print(next(myitr2))
+print(next(myitr2))
+print(next(myitr2))
+print(next(myitr2))
+print(next(myitr2))
