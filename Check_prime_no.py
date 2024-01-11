@@ -4,7 +4,7 @@ Created on Thu Jan 11 21:32:18 2024
 
 @author: khanb
 """
-
+"""
 def is_prime(number):
     if number < 2:
         return False
@@ -33,3 +33,31 @@ def main():
         
 if __name__=="__main__":
     main()
+"""
+
+def is_prime(number):
+    if number < 2:
+        return False
+    for i in range(2, int(number**0.5) + 1):
+        if number % i == 0:
+            return False
+    return True
+
+def main():
+    try:
+        user_input = int(input("Enter a number: "))
+        if user_input < 0:
+            print("Please enter a positive integer.")
+        else:
+            if is_prime(user_input):
+                print(f"{user_input} is a prime number.")
+            else:
+                print(f"{user_input} is not a prime number.")
+
+            print(f"{user_input} is a whole number.")
+    except ValueError:
+        print("Invalid input. Please enter a valid integer.")
+
+if __name__ == "__main__":
+    main()
+
